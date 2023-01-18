@@ -1,0 +1,41 @@
+root(#)		관리자
+$		일반 사용자
+
+^z		백그라운드 전환
+
+&  ... & 	백그라운드 실행해라
+daemon		백그라운드 실행중인 서비스
+SSH-service
+
+부팅할 때 맨 처음에 비디오 카드 정보를 찾는다.
+nl /etc/fstab			파일을 읽어서 부팅, 날리면 난리가 난다.
+
+하드디스크 추가
+fdisk
+mkfs
+mount
+
+파일 내용 보기
+cat
+tac
+nl
+less
+more
+
+http 
+ftp 
+smtp 
+imap 
+dns 
+mysql
+grep oracle				
+
+cat -b		빈 라인에 행번호x
+cat -n		빈 라인에 행번호o
+
+361	라인
+1773	문자
+12813	단어
+
+
+
