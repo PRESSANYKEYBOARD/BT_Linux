@@ -1,0 +1,26 @@
+select user();
+select now();
+use mysql
+show databases;
+use mysql
+
+mysql> alter user root@localhost identified by 'a';
+Query OK, 0 rows affected (0.00 sec)
+mysql> create user myace@localhost identified by '1';
+Query OK, 0 rows affected (0.03 sec)
+mysql> grant all privileges on aceDB.* to myace@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql -u myace -p
+password 입력
+mysql> create database aceDB;
+mysql> use aceDB;
+mysql> show tables;
+mysql> create table Company(
+    -> name char(20),
+    -> empl0yee int);
+mysql> insert into Company values('google', 60000);
+mysql> insert into Company values('meta', 45000);
+mysql> insert into Company values('cisco', 23000);
+mysql> select * from Company;
+
