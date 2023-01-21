@@ -1,0 +1,20 @@
+글꼴 : D2Coding
+putty.exe
+notepad++
+
+​
+'   single quote  홑 따옴표
+"   double quote  겹 따옴표 
+`   back quote, back tick    
+~   tilde, 물결(wave), 출렁이 
+
+​
+2^8  =   256    1 byte
+2^16 = 65536 	2 byte
+2^32 = 42.9억   4 byte
+2^64 = 1844경   8 byte
+
+2^10  1K
+2^20  1M
+2^30  1G
+2^40  1T
