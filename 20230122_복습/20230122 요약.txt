@@ -1,0 +1,88 @@
+가상 시스템 가져오기: 파일 > 가상시스템 가져오기 > 파일 탐색기 > 내보내기로 생성된 .ova 파일 선택
+
+putty >자신의 리눅스로 접속> root로 변경: su - 또는 sudo -i (로그아웃: exit)
+이 방법은 권장하지 않음 → 일반 사용자 계정에서 수행할 명령어 앞에 sudo 명령어로 root 권한을 부여하여 수행
+
+#(root): 관리자, $: 일반사용자
+
+whoami 또는 id: 현재 사용자 정보 확인 
+echo ~ = echo $HOME: 홈 directory 확인
+
+vi ~/.bash_aliases
+
+:set nu
+
+alias h='history'
+alias c='clear'
+alias l='ls -AlFh'
+alias ai='apt -y install'
+alias pq='ps -ef | grep'
+alias dp='dpkg -l | grep'
+alias df='df -Th'
+alias du='du -shc'
+alias p6='tail -6 /etc/passwd'
+alias np='nl /etc/passwd'
+
+alias dq='dpkg -l | grep’
+
+(9, 10번은 별도로 추가함)
+
+. ~/.bash_aliases		// bash.alias로 저장하지 말 것.
+
+-------------------------------------------------------------
+
+du: 용량확인 (du=diskuse)
+
+부팅 하면 .profile → .bashrc → .bash_aliases 순으로 읽어들임
+
+
+nl .bash_history: 이전 세션에서 수행한 명령어 history를 보고싶을 때 (로그아웃하면 histoty가 저장됨)
+다른 위치에서 실행하고 싶을 때: nl ~/.bash_history
+
+nl /etc/passwd: user 확인
+
+31번까지는 기본적으로 있는 내용
+
+-------------------------------------------------------------
+
+VirtualBox
+
+Alt + Function Key: 가상 터미널 생성 또는 전환 (F1 ~ F6)
+tty: terminal number 확인
+
+
+apt list | nl
+apt list --installed | wc -l : 설치된 패키지 개수 확인 또는apt list --installed | nl  또는 dpkg -l | nl
+
+
+dpkg -l | grep apache2: 설치된 apache2 확인
+apt show apache2: apache2 정보 확인
+apt update apache2 → E: update 명령은 인수를 받지 않습니다 → apache2를 지우고 실행
+apt upgrade → y 
+apt remove apache2 
+dpkg -l | grep apache2 → 패키지명 앞에 rc: 삭제된 상태, ii: 설치된 상태
+apt -y install apache2
+
+업그레이드, 설치 시 나오는 restarting을 물어보는 화면은 확인, 취소 무관
+
+
+프로세스 관리
+
+top: 실행중인 프로세스 확인
+task = process
+
+id: id 확인 (root일 경우 0)
+pid: process id, uid: user id, gid: group id
+
+ps -ef | grep  bash
+pid	ppid	terminal number	
+j	1279	710	tty1	00:00:00 -bash
+
+
+kill signal(name 또는 number) pid e.g. kill -9 bash
+signal 종류는 kill -l로 확인할 수 있음
+
+pstree: 프로세스 구조를 tree구조로 표시
+root process = systemd (init)
+
+
