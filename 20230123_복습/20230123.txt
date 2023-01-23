@@ -1,0 +1,70 @@
+VirtualBox 실행
+(참조: VirtualBox에 CentOS 7 설치하기)
+
+ 
+
+1. 새로 만들기
+이름: CentOS7, 이 외 Default 상태로 진행
+-> CentOS7 전원 꺼짐 생성
+
+2. 설정 - 저장소 - 컨트롤러: IDE 비어있음 - CD 모양 클릭 후, Download받은 CentOS 파일 선택
+시스템이 디스크와 통신하기 위해서는 컨트롤러를 사용하며, 타입은 IDE/SCSI로 나뉨
+이러한 컨트롤러 IDE에 설치할 O/S image 파일을 CentOS로 지정
+
+3. 시작 클릭
+ 
+4. 파일 - 환경설정 - 입력 - 가상머신 - 호스트 키 조합 단축키 클릭 후 F11 - 확인
+ * F11을 누르면 커서를 가상환경 밖으로 움직일 수 있음
+
+5. 언어: 한국어
+
+6. KDUMP 설치 - kdump 활성화 해제 - 완료
+
+7. 네트워크 및 호스트명 - 이더넷* 켬으로 변경, 호스트이름 변경(hj0216.linux.kr) 적용 - 완료
+*이더넷(Ethernet): 대표적인 컴퓨터 네트워크 기술의 하나로, 가정이나 건물과 같은 로컬 환경의 컴퓨터 및 기타 장치를 네트워크에 연결하기 위해 개발된 통신 표준
+이러한 로컬 환경은 LAN(Local Area Network)으로 정의되며 여러 장치를 연결하여 해당 위치의 다른 사람들과 정보를 작성, 저장 공유할 수 있음
+
+8. SECURITY POLICY 끔으로 변경
+
+9. 설치 시작
+
+10. root 암호 설정 및 사용자 생성
+root d=암호: r
+사용자 성명: j, 사용자 암호: j
+
+11. 설치 완료 후 재부팅
+
+12. 부팅 완료 후 계정 생성 여부 확인
+login: root
+password: r
+who am i -> root 확인
+exit: logout
+
+login: j
+password: j
+who am i -> j 확인
+ctrl D: 재 로그인 단축키
+
+root로 재 로그인
+login: root
+password: r
+
+13. 각종 명령어 실행
+df -h: Disk Free, 디스크 여유공간을 사람이 보기 좋은 MB, GB 단위로(-h 옵션 기능) 확인
+date: 날짜 확인
+rpm -qa: RedHat Pkg Manager, 설치한 pkg 목록
+rpm -qa |(pipe라고 읽음) nl: 설치한 pkg 목록 및 개수
+rpm -qa | wc -l: 설치한 pkg 개수
+
+ping 8.8.8.8: Ping Test, 단말이 Network에 정상 접속되었는지, 데이터를 정상적으로 주고받는지 확인
+ping -c3 8.8.8.8: 패킷 3개 보내는 방식으로 Ping test
+
+systemctl* stop / disable firewalld: 방화벽** 일시적 끄기(부팅하면 켜짐) / 방화벽 완전 끄기
+systemctl start / enable sshd: ssh*** 서비스 일시적 켜기(부팅하면 꺼짐) / ssh 서비스 완전 켜기
+
+* systemctl과 systemd
+Linux OS이기 때문에 부팅 과정에서 시스템을 초기화 하고 환경을 설정하는 프로세스가 필요하며, 이러한 역할을 하는 것이 systemd, system demon이며, 이러한 systemd를 systemctl 명령어로 관리함
+** 방화벽: 미리 정의된 보안 규칙을 기반으로 출입 네트워크 트래픽(네트워크 장치에서 일정 시간 내에 흐르는 데이터의 양)을 모니터링하고 제어하는 네트워크 보안 시스템
+*** ssh, Secure Shell: 원격지 호스트 컴퓨터에 접속하기 위해 사용되는 인터넷 프로토콜이자 원격접속을 안전하게 할 수 있게 해주는 프로토콜
+
+ctrl C: 작업 중단
