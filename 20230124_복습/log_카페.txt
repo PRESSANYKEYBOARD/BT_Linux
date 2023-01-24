@@ -1,0 +1,369 @@
+
+root@e5:~# pq ssh
+root         762       1  0 09:34 ?        00:00:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root        1469     762  0 09:35 ?        00:00:00 sshd: j [priv]
+j           1530    1469  0 09:36 ?        00:00:00 sshd: j@pts/0
+root        1802    1541  0 10:07 pts/0    00:00:00 grep --color=auto ssh
+							
+
+
+
+권한--------------------------------------------------------------------------------------------------------------------------------------
+#groupadd ACE
+#groupadd KING
+#useradd cctv
+#passwd cctv
+
+#chomod 700 /y1
+#chmod 700 /y1
+#chmod 701 /y2
+#chmod 705 /y3
+#chmod 707 /y4
+#chmod 1707 /y5
+
+#(root)
+drwx------   2 root root 4.0K  1월 19 11:01 y1/
+drwx-----x   2 root root 4.0K  1월 19 11:01 y2/
+drwx---r-x   2 root root 4.0K  1월 19 11:01 y3/
+drwx---rwx   2 root root 4.0K  1월 19 11:01 y4/
+drwx---rwt   2 root root 4.0K  1월 19 11:01 y5/
+
+cctv$(user)
+drwx------   2 root root       4096  1월 19 11:01 y1/
+drwx-----x   2 root root       4096  1월 19 11:04 y2/
+drwx---r-x   2 root root       4096  1월 19 11:04 y3/
+drwx---rwx   2 root root       4096  1월 19 11:04 y4/
+drwx---rwt   2 root root       4096  1월 19 11:01 y5/
+		
+cctv$ cd /y1
+-bash: cd: /y1: 허가 거부
+
+cctv는 root입장에서 others
+y1 입장 거부
+y2 입장만 가능
+y3 입장 가능, 둘러 보기 가능, 만들기 x
+y4 입장 가능, 둘러 보기 가능, 만들기 가능(지우기도 가능)
+y5 입장 가능, 둘러 보기 가능, 만들기 가능(지우기 불가능)
+cctv@e5:/y5$ rm -rf *
+rm: 'bash.bashrc'를 지울 수 없음: 명령을 허용하지 않음
+rm: 'bash_completion'를 지울 수 없음: 명령을 허용하지 않음
+rm: 'bindresvport.blacklist'를 지울 수 없음: 명령을 허용하지 않음
+
+=> w : 수정, 삭제 권한 포함
+
+umask-------------------------------------------------------------------------------------------------------------------------------------
+#umask 672
+#mkdir dd300
+#cal > aa300
+#l
+
+
+log-----------------------------------------------------------------------------------------------------------------------------------------
+root@e5:~# nl /etc/passwd
+     1  root:x:0:0:root:/root:/bin/bash
+     2  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+     3  bin:x:2:2:bin:/bin:/usr/sbin/nologin
+     4  sys:x:3:3:sys:/dev:/usr/sbin/nologin
+     5  sync:x:4:65534:sync:/bin:/bin/sync
+     6  games:x:5:60:games:/usr/games:/usr/sbin/nologin
+     7  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+     8  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+     9  mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+    10  news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+    11  uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+    12  proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+    13  www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+    14  backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+    15  list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+    16  irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+    17  gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+    18  nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+    19  _apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+    20  systemd-network:x:101:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+    21  systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+    22  messagebus:x:103:104::/nonexistent:/usr/sbin/nologin
+    23  systemd-timesync:x:104:105:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+    24  pollinate:x:105:1::/var/cache/pollinate:/bin/false
+    25  sshd:x:106:65534::/run/sshd:/usr/sbin/nologin
+    26  syslog:x:107:113::/home/syslog:/usr/sbin/nologin
+    27  uuidd:x:108:114::/run/uuidd:/usr/sbin/nologin
+    28  tcpdump:x:109:115::/nonexistent:/usr/sbin/nologin
+    29  tss:x:110:116:TPM software stack,,,:/var/lib/tpm:/bin/false
+    30  landscape:x:111:117::/var/lib/landscape:/usr/sbin/nologin
+    31  usbmux:x:112:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin
+    32  j:x:1000:1000:j:/home/j:/bin/bash
+    33  lxd:x:999:100::/var/snap/lxd/common/lxd:/bin/false
+    34  mysql:x:113:118:MySQL Server,,,:/nonexistent:/bin/false
+    35  smmta:x:114:120:Mail Transfer Agent,,,:/var/lib/sendmail:/usr/sbin/nologin
+    36  smmsp:x:115:121:Mail Submission Program,,,:/var/lib/sendmail:/usr/sbin/nologin
+    37  tomcat:x:998:998:Apache Tomcat:/var/lib/tomcat:/usr/sbin/nologin
+    38  fwupd-refresh:x:116:122:fwupd-refresh user,,,:/run/systemd:/usr/sbin/nologin
+    39  vboxadd:x:997:1::/var/run/vboxadd:/bin/false
+    40  mbc:x:1002:1002::/home/mbc:/bin/sh
+    41  ytn:x:1003:1003::/home/ytn:/bin/sh
+    42  sbs:x:1004:1004::/home/sbs:/bin/sh
+    43  jtbc:x:1005:1005::/home/jtbc:/bin/bash
+    44  ebs:x:1006:1006:leekangin,303,02)553-4234,02-430-4329,잘생김:/home/ebs:/bin/bash
+    45  cbs:x:1007:1008::/home/cbs:/bin/bash
+    46  tbs:x:1008:1009::/home/tbs:/bin/bash
+    47  ocn:x:1009:1010::/home/ocn:/bin/bash
+    48  cnn:x:1010:1011::/home/cnn:/bin/bash
+    49  it1:x:1011:1013::/home/it1:/bin/bash
+    50  it2:x:1012:1014::/home/it2:/bin/bash
+    51  it3:x:1013:1015::/home/it3:/bin/bash
+    52  it4:x:1014:1016::/home/it4:/bin/bash
+    53  it5:x:1015:1017::/home/it5:/bin/bash
+    54  bbc:x:1016:1018::/home/bbc:/bin/bash
+    55  cctv:x:1017:1021::/home/cctv:/bin/bash
+
+=>2  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin  shell이 없네 이런 애들 시스템계정
+
+crontab------------------------------------------------------------------------------------------------------------------------------------------------
+root@e5:~/d4/dd4# find / -name libc.a
+/usr/lib/x86_64-linux-gnu/libc.a
+root@e5:~/d4/dd4# cp /usr/lib/x
+x86_64-linux-gnu/ xfsprogs/
+root@e5:~/d4/dd4# cp /usr/lib/x
+x86_64-linux-gnu/ xfsprogs/
+root@e5:~/d4/dd4# cp /usr/lib/x86_64-linux-gnu/libc.a .
+root@e5:~/d4/dd4# ls
+libc.a
+root@e5:~/d4/dd4# file libc.a
+libc.a: current ar archive
+root@e5:~/d4/dd4# ar xv libc.a
+
+
+root@e5:~/d4/dd4# ll | wc -l
+2059
+2059 - c언어 라이브러리
+
+
+root@e5:~/d4/dd4# ls /usr/lib/x86_64-linux-gnu/*
+나온 것들 중에
+확장자 a 인 것 :static library (정적 라이브러리(지혼자 씀))
+
+
+
+root@e5:~/d4/dd4# ldd /bin/ls
+     <1>   linux-vdso.so.1 (0x00007ffd59de2000)
+     <2>   libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f8c52eef000)
+     <3>   libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f8c52cc7000)
+     <4>   libpcre2-8.so.0 => /lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x00007f8c52c30000)
+     <5>   /lib64/ld-linux-x86-64.so.2 (0x00007f8c52f48000)
+ls가 실행되려면 <1>,<2>,<3>,<4>,<5> 연결되어 있어야 실행 되는 것
+
+.so = shared object(공유 라이브러리)
+.a = static library (정적 라이브러리(자기혼자 씀))
+
+
+DLL = dynamic link library(윈도우 차원에서 .so랑 같은 개념)
+
+
+175p------------------------------------------------------------------------------------------------------------------------------------------------
+root@e5:~/d4# cat > a.sh
+who
+date
+cal
+root@e5:~/d4# bash a.sh
+j        tty1         2023-01-19 14:38
+j        pts/0        2023-01-19 14:38 (10.0.2.2)
+2023. 01. 19. (목) 15:43:47 KST
+      1월 2023
+일 월 화 수 목 금 토
+ 1  2  3  4  5  \6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+
+root@e5:~/d4# a.sh
+명령어 'a.sh' 을(를) 찾을 수 없습니다. 다음 명령어로 시도하시겠습니까:
+  deb ashash의 명령어 ' (0.5.11+git20210903+057cd650a4ed-3build1)'
+  deb adshapt-dater의 명령어 ' (1.0.4-5)'
+Try: apt install <deb name>
+root@e5:~/d4# ./a.sh
+-bash: ./a.sh: 허가 거부
+root@e5:~/d4# chmod 755 a.sh
+root@e5:~/d4# cp a.sh aa
+root@e5:~/d4# aa
+명령어 'aa' 을(를) 찾을 수 없습니다. 그러나 다음을 통해 설치할 수 있습니다:
+apt install astronomical-almanac
+--------------------------------------------------------------------------------------------------------------------------------------------------
+root@e5:~/d4# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+왜 한 거지  => 경로를 찾아도 안 나오는 것은 경로를 알고 있어야한다.
+root@e5:~/d4# /root/d4/aa
+j        tty1         2023-01-19 14:38
+j        pts/0        2023-01-19 14:38 (10.0.2.2)
+2023. 01. 19. (목) 15:45:46 KST
+      1월 2023
+일 월 화 수 목 금 토
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+root@e5:~/d4# ~/d4/aa
+j        tty1         2023-01-19 14:38
+j        pts/0        2023-01-19 14:38 (10.0.2.2)
+2023. 01. 19. (목) 15:46:22 KST
+      1월 2023
+일 월 화 수 목 금 토
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+root@e5:~/d4# $HOME/d4/aa
+j        tty1         2023-01-19 14:38
+j        pts/0        2023-01-19 14:38 (10.0.2.2)
+2023. 01. 19. (목) 15:46:32 KST
+      1월 2023
+일 월 화 수 목 금 토
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+
+root@e5:~/d4# PATH=$PATH:.
+root@e5:~/d4# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:.
+
+root@e5:~/d4# aa
+j        tty1         2023-01-19 14:38
+j        pts/0        2023-01-19 14:38 (10.0.2.2)
+2023. 01. 19. (목) 15:48:44 KST
+      1월 2023
+일 월 화 수 목 금 토
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+
+=> 경로가 중요하다.
+
+root@e5:~/d4# compgen -k | column
+if              case            until           time            ]]
+then            esac            do              {               coproc
+else            for             done            }
+elif            select          in              !
+fi              while           function        [[
+
+-k : keywords
+
+
+root@e5:~/d4# My() { echo "나는 나다. " }
+> ^C
+root@e5:~/d4# My()
+> {
+> echo "나는 나다";
+> }
+root@e5:~/d4# My
+나는 나다
+
+root@e5:~/d4# function MyFun() { echo "My Function "; }
+root@e5:~/d4# MyFun
+My Function
+
+root@e5:~/d4# function MyFun() { echo "My : "; echo $LOGNAME; }
+root@e5:~/d4# MyFun
+My :
+root
+
+
+내장된 함수 찾는 법--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+root@e5:~/d4# python3
+Python 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0] on linux
+>>> dir(__builtins__)
+['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BlockingIOError', 'BrokenPipeError', 'BufferError', 'BytesWarning', 'ChildProcessError', 'ConnectionAbortedError', 'ConnectionError', 'ConnectionRefusedError', 'ConnectionResetError', 'DeprecationWarning', 'EOFError', 'Ellipsis', 'EncodingWarning', 'EnvironmentError', 'Exception', 'False', 'FileExistsError', 'FileNotFoundError', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'InterruptedError', 'IsADirectoryError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'ModuleNotFoundError', 'NameError', 'None', 'NotADirectoryError', 'NotImplemented', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'PermissionError', 'ProcessLookupError', 'RecursionError', 'ReferenceError', 'ResourceWarning', 'RuntimeError', 'RuntimeWarning', 'StopAsyncIteration', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'TimeoutError', 'True', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'ZeroDivisionError', '__build_class__', '__debug__', '__doc__', '__import__', '__loader__', '__name__', '__package__', '__spec__', 'abs', 'aiter', 'all', 'anext', 'any', 'ascii', 'bin', 'bool', 'breakpoint', 'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'compile', 'complex', 'copyright', 'credits', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'exit', 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'license', 'list', 'locals', 'map', 'max', 'memoryview', 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property', 'quit', 'range', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars', 'zip']
+
+내장된 명령어------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+root@e5:~/d4# enable | column
+enable .                enable exec             enable readarray
+enable :                enable exit             enable readonly
+enable [                enable export           enable return
+enable alias            enable false            enable set
+enable bg               enable fc               enable shift
+enable bind             enable fg               enable shopt
+enable break            enable getopts          enable source
+enable builtin          enable hash             enable suspend
+enable caller           enable help             enable test
+enable cd               enable history          enable times
+enable command          enable jobs             enable trap
+enable compgen          enable kill             enable true
+enable complete         enable let              enable type
+enable compopt          enable local            enable typeset
+enable continue         enable logout           enable ulimit
+enable declare          enable mapfile          enable umask
+enable dirs             enable popd             enable unalias
+enable disown           enable printf           enable unset
+enable echo             enable pushd            enable wait
+enable enable           enable pwd
+enable eval             enable read
+
+=> shell 안에 저장되어 있는 명령어들(find 불가능)
+cal같 명령어는 따로 파일로 저장 되어있음(find 가능)
+
+root@e5:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:c1:2a:50 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 76855sec preferred_lft 76855sec
+    inet6 fe80::a00:27ff:fec1:2a50/64 scope link
+       valid_lft forever preferred_lft forever
+
+enp0s3 ENP0S3는 리눅스 및 유닉스 기반 운영 체제에서 일반적으로 사용되는 네트워크 인터페이스 이름
+10.0.2.15 - 내꺼 ip
+DHCP(유동 ip) 20000가구가 공동 구매한 느낌, 2000개정도 확보해두고 나눠 쓰는 느낌
+
+사설 ip - 어느 기관에도 공식적으로 부여되지 않은 ip, 어떤 곳에서도 내부망으로 이용 가능
+- A,B,C Class로 국제 누군가 나눠 둠 (p143) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
